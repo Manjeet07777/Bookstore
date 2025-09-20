@@ -1,0 +1,103 @@
+{% extends 'store/base.html' %}
+{% block content %}
+{% comment %} <style>
+    /* Container styling */
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 25px;
+        gap: 10px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        width: 250px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        transition: border 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border: 1px solid #3498db;
+        box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        outline: none;
+    }
+
+    input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #3498db;
+        border: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #2980b9;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+    }
+
+    ul li {
+        background-color: #f7f7f7;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        transition: transform 0.2s;
+    }
+
+    ul li:hover {
+        transform: scale(1.02);
+    }
+
+    a {
+        display: block;
+        width: max-content;
+        margin: 0 auto;
+        text-align: center;
+        padding: 12px 20px;
+        background-color: #2ecc71;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+    }
+
+    a:hover {
+        background-color: #27ae60;
+    }
+</style> {% endcomment %}
+
+<h2>Available Books</h2>
+<form method="get">
+    <input type="text" name="q" placeholder="Search by title...">
+    <input type="submit" value="Search">
+</form>
+<ul>
+    {% for book in books %}
+        <li>{{ book.title }} - ₹{{ book.price }} - Stock: {{ book.stock }}</li>
+    {% empty %}
+        <li>No books found.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'place_order' %}">Place Order</a>
+{% endblock %}
