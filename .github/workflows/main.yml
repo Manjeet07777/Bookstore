@@ -8,11 +8,11 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${ { secrets.DOCKER_HUB_USERNAME } }/bookstore-app
-      TAG: ${{ github.sha }}
+      IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/bookstore-app
+      TAG: latest   # ya ${{ github.sha }} agar unique tag chahiye
 
     steps:
-    - name: Checkout
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Docker login
@@ -21,13 +21,13 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Build image
-      run: docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG .
+    - name: Build Docker image
+      run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} -t ${{ env.IMAGE_NAME }}:latest .
 
-    - name: Push image
+    - name: Push Docker image
       run: |
-        docker push $IMAGE_NAME:latest
-        docker push $IMAGE_NAME:$TAG
+        docker push ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+        docker push ${{ env.IMAGE_NAME }}:latest
 
     - name: Deploy to EC2
       uses: appleboy/ssh-action@v0.1.7
@@ -38,5 +38,5 @@ jobs:
         script: |
           docker stop bookstore || true
           docker rm bookstore || true
-          docker pull $IMAGE_NAME:latest
-          docker run -d --name bookstore -p 80:8000 $IMAGE_NAME:latest
+          docker pull ${{ env.IMAGE_NAME }}:latest
+          docker run -d --name bookstore -p 80:8000 ${{ env.IMAGE_NAME }}:latest
