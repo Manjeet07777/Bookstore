@@ -117,4 +117,4 @@ LOGIN_REDIRECT_URL = '/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-ALLOWED_HOSTS = ['16.171.145.98', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['13.60.187.248', 'localhost', '127.0.0.1']
